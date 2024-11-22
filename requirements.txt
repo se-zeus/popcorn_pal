@@ -15,3 +15,5 @@ lxml
 urllib3
 requests
 pickleshare
+pymongo
+bcrypt
