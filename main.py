@@ -1,9 +1,11 @@
+import os
 import numpy as np
 import pandas as pd
 from flask import Flask, render_template, request
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
+from dotenv import load_dotenv
 import json
 import bs4 as bs
 import urllib.request
@@ -22,8 +24,9 @@ from flask import session
 app = Flask(__name__)
 
 # Replace with your MongoDB connection string
-uri = "mongodb+srv://seyoubin:seyoubin@csc510.pdrzq.mongodb.net/?retryWrites=true&w=majority&appName=csc510"
-client = MongoClient(uri)
+MONGO_URI = os.getenv('MONGO_URI')
+# uri = "mongodb+srv://mndedhia:test@se-project.agemh.mongodb.net/?retryWrites=true&w=majority&appName=se-project"
+client = MongoClient(MONGO_URI)
 db = client['test']  # Use your database name
 users_collection = db['users']  # Use your collection name
 
@@ -91,7 +94,7 @@ app = Flask(__name__)
 def home():
     try:
         suggestions = get_suggestions()
-        return render_template('home.html', suggestions=suggestions)
+        return render_template('home.html', suggestions=suggestions, TMDB_API_KEY=os.getenv('TMDB_API_KEY'))
     except Exception as e:
         logging.error(f"Error in home route: {e}")
         logging.error(traceback.format_exc())

@@ -17,3 +17,4 @@ requests
 pickleshare
 pymongo
 bcrypt
+python-dotenv
